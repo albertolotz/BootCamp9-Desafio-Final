@@ -12,4 +12,5 @@ apliado CSS básico:
 
 Mobile:
 Pequenos ajustes no layout para adequar ao layout uniciado.
+Testado apenas na plataforma android:
 

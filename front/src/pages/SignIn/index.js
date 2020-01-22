@@ -1,16 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Form, Input } from '@rocketseat/unform';
+
 import * as Yup from 'yup';
-import logo1 from '~/assets/logo1.png';
+import { Form, Input } from '@rocketseat/unform';
 import { signInRequest } from '~/store/modules/auth/actions';
+
+// import { toast } from 'react-toastify';
+import logo from '~/assets/logo.png';
+import { Container } from './styles';
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email('Insira um email Válido')
-    .required('e-mail é obrigatório'),
-  password: Yup.string().required('senha é obrigatória'),
+    .email('Insira Email Válido')
+    .required('e-mail obrigatório'),
+  password: Yup.string()
+    .min(6, 'Senha com no mínimo 6 caracteres. ')
+    .required('Senha precisa se preechida.'),
 });
 
 export default function SignIn() {
@@ -23,14 +28,24 @@ export default function SignIn() {
 
   return (
     <>
-      <img src={logo1} alt="GoBarber" width={90} />
-      <Form schema={schema} onSubmit={handleSubmit}>
-        <Input name="email" type="Email" placeholder="Seu Email" />
-        <Input name="password" type="password" placeholder="Senha" />
+      <Container>
+        <div>
+          <img src={logo} alt="logo" />
+          <strong>GYMPOINT</strong>
 
-        <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
-        <Link to="/register">Criar Conta Gratuíta</Link>
-      </Form>
+          <Form schema={schema} onSubmit={handleSubmit}>
+            <label>SEU E-MAIL</label>
+            <Input type="email" placeholder="seu e-mail" name="email" />
+            <label>SUA SENHA</label>
+            <Input type="password" placeholder="sua senha" name="password" />
+
+            <button type="submit">
+              {loading ? 'Carregando ...' : 'Entrar no Sistema'}
+            </button>
+          </Form>
+          <small>by Alberto Lotz - copyright 2019</small>
+        </div>
+      </Container>
     </>
   );
 }

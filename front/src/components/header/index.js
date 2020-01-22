@@ -1,31 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import Notification from '~/components/notifications';
-import logo from '~/assets/logo-purple.svg';
-
+import { useDispatch, useSelector } from 'react-redux';
+import logo from '~/assets/logo.png';
 import { Container, Content, Profile } from './styles';
 
 export default function Header() {
-  const profile = useSelector(state=>state.user.profile);
+  const dispath = useDispatch();
+  const userName = useSelector(state => state.user.profile.name);
 
   return (
     <Container>
       <Content>
         <nav>
-          <img src={logo} alt="GoBarber" />
-          <Link to="/dashboard">DASHBOARD</Link>
+          <img src={logo} alt="GymPoint" />
+          <Link id="logoName" to="/main">
+            GYMPOINT
+          </Link>
+          <Link to="/students">Alunos</Link>
+          <Link to="/plans">Planos</Link>
+          <Link to="/registries">Matriculas</Link>
+          <Link to="/assistance">Pedido de Auxilio</Link>
         </nav>
 
         <aside>
-          <Notification />
           <Profile>
             <div>
-              <strong>{profile.nome}</strong>
-              <Link to="/profile">Meu Perfil</Link>
+              <strong>{userName}</strong>
+              <button
+                onClick={() => dispath({ type: '@auth/SIGN_OUT' })}
+                type="button"
+              >
+                Sair do Sistema
+              </button>
             </div>
-            <img src={ (profile.avatar && profile.avatar.url) ||
-                     'https://api.adorable.io/avatars/50/abott@adorable.png'}  alt='Avatar'/>
           </Profile>
         </aside>
       </Content>
